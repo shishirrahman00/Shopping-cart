@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from "../action/action";
+import { ADD_TO_CART, GET_PRODUCTS } from "../action/action";
 
 export const productReducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +6,11 @@ export const productReducer = (state, action) => {
       return {
         ...state,
         products: action.payload,
+      };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        productCart: [...state.productCart, action.payload],
       };
 
     default:

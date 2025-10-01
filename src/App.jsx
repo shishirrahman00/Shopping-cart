@@ -11,7 +11,7 @@ import { ProductContext } from "./context/productContext";
 function App() {
   const { dispatch } = useContext(ProductContext);
   useEffect(() => {
-    fetch("https://dummyjson.com/products/search?q=phone")
+    fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((data) => {
         return dispatch({

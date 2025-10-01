@@ -4,6 +4,7 @@ import { productReducer } from "../reducer/productReducer";
 const ProductContext = createContext();
 const initialState = {
   products: [],
+  productCart: [],
 };
 export function ProductContextPovider({ children }) {
   const [state, dispatch] = useReducer(productReducer, initialState);

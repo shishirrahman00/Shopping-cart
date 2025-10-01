@@ -1,3 +1,4 @@
 const GET_PRODUCTS = "GET_PRODUCTS";
+const ADD_TO_CART = "ADD_TO_CART";
 
-export { GET_PRODUCTS };
+export { ADD_TO_CART, GET_PRODUCTS };
