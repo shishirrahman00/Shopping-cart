@@ -1,8 +1,13 @@
 import { useContext } from "react";
+import {
+  PRODUCT_DECREASE,
+  PRODUCT_DELETE,
+  PRODUCT_INCREASE,
+} from "../../action/action";
 import { ProductContext } from "../../context/productContext";
 import OrderSummary from "./OrderSummary";
 export default function Cart() {
-  const { state } = useContext(ProductContext);
+  const { state, dispatch } = useContext(ProductContext);
   return (
     <div className="lg:col-span-1">
       <div className="bg-white rounded-lg p-6 border border-gray-200">
@@ -28,7 +33,17 @@ export default function Cart() {
                 <div className="flex-grow ">
                   <div className="flex justify-between">
                     <h3 className="font-medium">{product.tile}</h3>
-                    <span className="text-red-500 text-sm">×</span>
+                    <button
+                      onClick={() => {
+                        return dispatch({
+                          type: PRODUCT_DELETE,
+                          payload: product,
+                        });
+                      }}
+                      className="text-white text-sm w-4 h-4 bg-black rounded-sm cursor-pointer inline-flex items-center justify-center"
+                    >
+                      ×
+                    </button>
                   </div>
                   <p className="text-sm text-gray-500">
                     Brand: {product.brand}
@@ -41,11 +56,28 @@ export default function Cart() {
                       ${(product.price * product.quantity).toFixed(3)}
                     </p>
                     <div className="flex items-center space-x-2">
-                      <button className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">
+                      <button
+                        // disabled={product.quantity === 0}
+                        onClick={() => {
+                          return dispatch({
+                            type: PRODUCT_DECREASE,
+                            payload: { ...product, quantity: 1 },
+                          });
+                        }}
+                        className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center"
+                      >
                         −
                       </button>
                       <span className="text-sm">{product.quantity}</span>
-                      <button className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">
+                      <button
+                        onClick={() => {
+                          return dispatch({
+                            type: PRODUCT_INCREASE,
+                            payload: { ...product, quantity: 1 },
+                          });
+                        }}
+                        className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center"
+                      >
                         +
                       </button>
                     </div>
