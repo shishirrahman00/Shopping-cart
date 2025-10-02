@@ -3,6 +3,14 @@ import { ProductContext } from "../../context/productContext";
 
 export default function OrderSummary() {
   const { state } = useContext(ProductContext);
+  const subTotal = state.productCart
+    .reduce((acc, curr) => {
+      return acc + curr.price * curr.quantity;
+    }, 0)
+    .toFixed(3);
+  const deliveryFee = 15;
+  const discount = 20 / 100;
+  const discountTotal = (subTotal * discount).toFixed(3);
   return (
     <div className="mt-6">
       <h3 className="font-bold text-lg mb-4">Order Summary</h3>
@@ -10,26 +18,24 @@ export default function OrderSummary() {
       <div className="space-y-2 mb-4">
         <div className="flex justify-between">
           <span className="text-gray-600">Subtotal</span>
-          <span className="font-medium">
-            $
-            {state.productCart
-              .reduce((acc, curr) => {
-                return acc + curr.price * curr.quantity;
-              }, 0)
-              .toFixed(3)}
-          </span>
+          <span className="font-medium">${subTotal}</span>
         </div>
         <div className="flex justify-between text-red-500">
           <span>Discount (-20%)</span>
-          <span>-$113</span>
+          <span>-${discountTotal}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-600">Delivery Fee</span>
-          <span className="font-medium">$15</span>
+          <span className="font-medium">${deliveryFee}</span>
         </div>
         <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200">
           <span>Total</span>
-          <span>$467</span>
+          <span>
+            $
+            {subTotal > 0
+              ? (subTotal + deliveryFee - discountTotal).toFixed(3)
+              : 0.0}
+          </span>
         </div>
       </div>
 
