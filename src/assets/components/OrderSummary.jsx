@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { ProductContext } from "../../context/productContext";
+
 export default function OrderSummary() {
+  const { state } = useContext(ProductContext);
   return (
     <div className="mt-6">
       <h3 className="font-bold text-lg mb-4">Order Summary</h3>
@@ -6,7 +10,14 @@ export default function OrderSummary() {
       <div className="space-y-2 mb-4">
         <div className="flex justify-between">
           <span className="text-gray-600">Subtotal</span>
-          <span className="font-medium">$565</span>
+          <span className="font-medium">
+            $
+            {state.productCart
+              .reduce((acc, curr) => {
+                return acc + curr.price * curr.quantity;
+              }, 0)
+              .toFixed(3)}
+          </span>
         </div>
         <div className="flex justify-between text-red-500">
           <span>Discount (-20%)</span>
