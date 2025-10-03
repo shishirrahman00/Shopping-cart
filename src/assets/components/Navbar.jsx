@@ -1,4 +1,11 @@
+import { useContext } from "react";
+import { ProductContext } from "../../context/productContext";
+
 export default function Navbar() {
+  const { state } = useContext(ProductContext);
+  const totalCartQuantity = state.productCart.reduce((acc, curr) => {
+    return curr.quantity + acc;
+  }, 0);
   return (
     <header className="border-b border-gray-200 py-4 px-4 md:px-8">
       <div className="container mx-auto flex items-center justify-between">
@@ -46,7 +53,7 @@ export default function Navbar() {
             </span>
           </div>
 
-          <a href="#" className="hover:text-gray-500 transition-colors">
+          <button className="hover:text-gray-500 transition-colors relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -61,7 +68,16 @@ export default function Navbar() {
                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
               />
             </svg>
-          </a>
+            <span
+              className={
+                totalCartQuantity > 0
+                  ? "w-6 h-6 bg-red-400 text-white absolute -top-[8px] -right-[8px] rounded-full inline-flex items-center justify-center "
+                  : "hidden"
+              }
+            >
+              {totalCartQuantity}
+            </span>
+          </button>
 
           <a href="#" className="hover:text-gray-500 transition-colors">
             <svg
