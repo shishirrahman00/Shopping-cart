@@ -14,7 +14,6 @@ export default function Products() {
           <span className="text-sm">Sort by:</span>
           <select className="border rounded-md px-2 py-1 text-sm">
             <option>Most Popular</option>
-            <option>Newest</option>
             <option>Price: Low to High</option>
             <option>Price: High to Low</option>
           </select>
@@ -52,6 +51,11 @@ export default function Products() {
                   </div>
                   <span className="text-xs text-gray-700">
                     ({product.stock} pcs left)
+                    {/* {state.productCart.find((item) => {
+                      return item.id === product.id
+                        ? product.stock - item.quantity
+                        : product.stock;
+                    })} */}
                   </span>
                 </div>
                 <p className="font-bold">${product.price}</p>
